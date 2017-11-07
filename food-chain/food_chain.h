@@ -41,11 +41,18 @@ namespace food_chain
 		{ verse_identifier::horse,	{"horse", "", ""} }
 	};
 
-	std::string sing();
+	std::string sing(const song_def_t* song_definition = &SONG_DEFINITION);
 	
-	std::string verse(const int verse_number);
+	std::string verse(
+		const int verse_number,
+		const song_def_t* song_definition = &SONG_DEFINITION
+	);
 	
-	std::string verses(const int start_verse_number, const int end_verse_number);
+	std::string verses(
+		const int start_verse_number,
+		const int end_verse_number,
+		const song_def_t* song_definition = &SONG_DEFINITION
+		);
 	
 	std::string gen_verse_beginning_lines(
 		const song_def_t* song_definition,

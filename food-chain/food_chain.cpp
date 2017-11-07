@@ -5,12 +5,15 @@ using namespace std;
 
 namespace food_chain
 {
-	string sing()
+	string sing(const song_def_t* song_definition)
 	{
-		return verses(1, SONG_DEFINITION.size());
+		return verses(1, song_definition->size(), song_definition);
 	}
 
-	string verse(const int verse_number)
+	string verse(
+		const int verse_number,
+		const song_def_t* song_definition
+	)
 	{
 		verse_identifier verse_id = verse_identifier(verse_number - 1);
 		
@@ -23,11 +26,15 @@ namespace food_chain
 		return verse_builder.str();
 	}
 
-	string verses(const int start_verse_number, const int end_verse_number)
+	string verses(
+		const int start_verse_number,
+		const int end_verse_number,
+		const song_def_t* song_definition
+	)
 	{
 		ostringstream verses_builder;
 		for (int i = start_verse_number; i <= end_verse_number; i++)
-			verses_builder << verse(i) << "\n";
+			verses_builder << verse(i, song_definition) << "\n";
 
 		return verses_builder.str();
 	}
