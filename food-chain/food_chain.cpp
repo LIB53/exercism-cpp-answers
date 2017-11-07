@@ -14,20 +14,18 @@ namespace food_chain
 	{
 		verse_identifier verse_id = verse_identifier(verse_number - 1);
 		
-		stringstream verse_builder;
+		ostringstream verse_builder;
 		verse_builder
 			<< gen_verse_beginning_lines(&SONG_DEFINITION, verse_id)
 			<< gen_verse_middle_lines(&SONG_DEFINITION, verse_id)
 			<< gen_verse_last_lines(&SONG_DEFINITION, verse_id);
 
-		const string verse = verse_builder.str();
-
-		return verse;
+		return verse_builder.str();
 	}
 
 	string verses(const int start_verse_number, const int end_verse_number)
 	{
-		stringstream verses_builder;
+		ostringstream verses_builder;
 		for (int i = start_verse_number; i <= end_verse_number; i++)
 			verses_builder << verse(i) << "\n";
 
@@ -41,7 +39,7 @@ namespace food_chain
 	{
 		const auto& verse_info = song_definition->at(verse_id);
 
-		stringstream lines_builder;
+		ostringstream lines_builder;
 
 		lines_builder
 			<< "I know an old lady who swallowed a "
@@ -64,11 +62,11 @@ namespace food_chain
 	)
 	{
 		if (
-			verse_id == get_first_verse_id(song_definition)
-			|| verse_id == get_last_verse_id(song_definition)
+			verse_id == find_first_verse_id(song_definition)
+			|| verse_id == find_last_verse_id(song_definition)
 			)
 		{
-			return "";
+			return string();
 		}
 		else
 		{
@@ -81,7 +79,7 @@ namespace food_chain
 		const verse_identifier verse_id
 	)
 	{
-		// Build song lines (stores in intermediate buffer)
+		// Build song lines (store in intermediate buffer)
 		
 		const auto gen_song_line =
 			[]
@@ -91,7 +89,7 @@ namespace food_chain
 			)
 			-> string
 			{
-				stringstream line_builder;
+				ostringstream line_builder;
 
 				line_builder
 					<< "She swallowed the "
@@ -107,30 +105,28 @@ namespace food_chain
 				return line_builder.str();
 			};
 		
-		// -- Build buffer
-		
 		stack<string> song_lines_buffer;
-		
-		auto song_definition_itr = song_definition->cbegin();
-		const auto song_definition_itr_end = song_definition->cend();
-		
-		do
 		{
-			const auto prev_verse_info = song_definition_itr->second;
-			const auto current_verse_info = (++song_definition_itr)->second;
-			
-			song_lines_buffer.push(
-				gen_song_line(prev_verse_info, current_verse_info)
-			);
-		}
-		while (
-			song_definition_itr->first < verse_id
-			&& song_definition_itr != song_definition_itr_end
-			);
+			auto song_definition_itr = song_definition->cbegin();
+			const auto song_definition_itr_end = song_definition->cend();
 
-		// Morph song lines buffer to string
+			do
+			{
+				const auto prev_verse_info = song_definition_itr->second;
+				const auto current_verse_info = (++song_definition_itr)->second;
+
+				song_lines_buffer.push(
+					gen_song_line(prev_verse_info, current_verse_info)
+				);
+			} while (
+				song_definition_itr->first < verse_id
+				&& song_definition_itr != song_definition_itr_end
+				);
+		}
 		
-		stringstream middle_lines_builder;
+		// Morph song lines buffer to string (XXX: consumes buffer object)
+		
+		ostringstream middle_lines_builder;
 		
 		while (!song_lines_buffer.empty())
 		{
@@ -148,12 +144,12 @@ namespace food_chain
 		const verse_identifier verse_id
 	)
 	{
-		if (verse_id != get_last_verse_id(song_definition))
+		if (verse_id != find_last_verse_id(song_definition))
 		{
-			stringstream final_line_builder;
+			ostringstream final_line_builder;
 			final_line_builder
 				<< "I don't know why she swallowed the "
-				<< get_first_verse_info(song_definition).creature_name << ". "
+				<< find_first_verse_info(song_definition).creature_name << ". "
 				<< "Perhaps she'll die.\n";
 			
 			return final_line_builder.str();
@@ -164,18 +160,18 @@ namespace food_chain
 		}
 	}
 
-	verse_identifier get_first_verse_id(const song_def_t* song_definition)
+	verse_identifier find_first_verse_id(const song_def_t* song_definition)
 	{
 		return song_definition->begin()->first;
 	}
 
-	verse_identifier get_last_verse_id(const song_def_t* song_definition)
+	verse_identifier find_last_verse_id(const song_def_t* song_definition)
 	{
 		return song_definition->rbegin()->first;
 	}
 
-	verse_data get_first_verse_info(const song_def_t* song_definition)
+	verse_data find_first_verse_info(const song_def_t* song_definition)
 	{
-		return song_definition->begin()->second;
+		return song_definition->at(find_first_verse_id(song_definition));
 	}
 }

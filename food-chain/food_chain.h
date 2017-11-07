@@ -23,31 +23,22 @@ namespace food_chain
 	struct verse_data
 	{
 		const std::string creature_name;
-		const std::string remark;
 		const std::string creature_epithet;
+		const std::string remark;
 	};
 
 	typedef std::map<verse_identifier, verse_data> song_def_t;
 
-	const auto FLY_VERSE_INFO		= verse_data{"fly", "", ""};
-	const auto SPIDER_VERSE_INFO	= verse_data{"spider", "It wriggled and jiggled and tickled inside her.", "that wriggled and jiggled and tickled inside her"};
-	const auto BIRD_VERSE_INFO		= verse_data{"bird", "How absurd to swallow a bird!", ""};
-	const auto CAT_VERSE_INFO		= verse_data{"cat", "Imagine that, to swallow a cat!", ""};
-	const auto DOG_VERSE_INFO		= verse_data{"dog", "What a hog, to swallow a dog!", ""};
-	const auto GOAT_VERSE_INFO		= verse_data{"goat", "Just opened her throat and swallowed a goat!", ""};
-	const auto COW_VERSE_INFO		= verse_data{"cow", "I don't know how she swallowed a cow!", ""};
-	const auto HORSE_VERSE_INFO		= verse_data{"horse", "", ""};
-
 	const song_def_t SONG_DEFINITION
 	{
-		{ verse_identifier::fly,	FLY_VERSE_INFO },
-		{ verse_identifier::spider,	SPIDER_VERSE_INFO },
-		{ verse_identifier::bird,	BIRD_VERSE_INFO },
-		{ verse_identifier::cat,	CAT_VERSE_INFO },
-		{ verse_identifier::dog,	DOG_VERSE_INFO },
-		{ verse_identifier::goat,	GOAT_VERSE_INFO },
-		{ verse_identifier::cow,	COW_VERSE_INFO },
-		{ verse_identifier::horse,	HORSE_VERSE_INFO }
+		{ verse_identifier::fly,	{"fly", "", ""} },
+		{ verse_identifier::spider,	{"spider", "that wriggled and jiggled and tickled inside her", "It wriggled and jiggled and tickled inside her."} },
+		{ verse_identifier::bird,	{"bird", "", "How absurd to swallow a bird!"} },
+		{ verse_identifier::cat,	{"cat", "", "Imagine that, to swallow a cat!"} },
+		{ verse_identifier::dog,	{"dog", "", "What a hog, to swallow a dog!"} },
+		{ verse_identifier::goat,	{"goat", "", "Just opened her throat and swallowed a goat!"} },
+		{ verse_identifier::cow,	{"cow", "", "I don't know how she swallowed a cow!"} },
+		{ verse_identifier::horse,	{"horse", "", ""} }
 	};
 
 	std::string sing();
@@ -76,15 +67,15 @@ namespace food_chain
 		const verse_identifier verse_id
 	);
 
-	verse_identifier get_first_verse_id(
+	verse_identifier find_first_verse_id(
 		const song_def_t* song_definition
 	);
 
-	verse_identifier get_last_verse_id(
+	verse_identifier find_last_verse_id(
 		const song_def_t* song_definition
 	);
 
-	verse_data get_first_verse_info(
+	verse_data find_first_verse_info(
 		const song_def_t* song_definition
 	);
 }
