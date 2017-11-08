@@ -1,9 +1,7 @@
-#if !defined(LEAP_H)
-#define LEAP_H
+#pragma once
+
 
 namespace leap
 {
 	bool is_leap_year(int);
 }
-
-#endif

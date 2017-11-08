@@ -7,12 +7,8 @@ namespace hamming
 {
 	int compute(const string& a, const string& b)
 	{
-		// guard
-
 		if (a.length() != b.length())
 			throw domain_error("Length of strings do not match.");
-
-		// calculate hamming distance
 
 		int counter = 0;
 
