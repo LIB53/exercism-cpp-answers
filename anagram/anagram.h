@@ -10,7 +10,7 @@ namespace anagram
 	class anagram_comparison_data
 	{
 	public:
-		anagram_comparison_data(const std::string& word = "");
+		explicit anagram_comparison_data(const std::string& word);
 		const std::string& base_word() const { return _base_word; }
 		const std::string& comparison_key() const { return _comparison_key; }
 		bool compare_with(const anagram_comparison_data other);
@@ -23,7 +23,9 @@ namespace anagram
 	class anagram
 	{
 	public:
-		anagram(std::string word);
+		anagram(std::string word)
+			: comparison_data{ word } {}
+
 		bool is_match_with(const std::string& words);
 		std::vector<std::string> matches(const std::vector<std::string>& words);
 

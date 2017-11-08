@@ -39,11 +39,6 @@ namespace anagram
 
 #pragma region Anagram Class
 
-	anagram::anagram(string word)
-	{
-		this->comparison_data = anagram_comparison_data(word);
-	}
-	
 	bool anagram::is_match_with(const string& word)
 	{
 		return
