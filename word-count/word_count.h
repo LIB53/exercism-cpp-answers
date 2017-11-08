@@ -1,11 +1,10 @@
-#if !defined(WORD_COUNT_H)
-#define WORD_COUNT_H
+#pragma once
 
-#include <string>
-#include <regex>
-#include <vector>
-#include <map>
 #include <algorithm>
+#include <map>
+#include <regex>
+#include <string>
+#include <vector>
 
 
 namespace word_count
@@ -18,5 +17,3 @@ namespace word_count
 	word_count_map to_word_count_map(const words_container& words);
 	word_count_map words(const std::string& phrase);
 }
-
-#endif
