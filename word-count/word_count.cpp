@@ -7,7 +7,7 @@ namespace word_count
 {
 	string to_normalized_word(const string& raw_word)
 	{
-		auto word_wc = string(raw_word);
+		auto word_wc = raw_word;
 		
 		transform(
 			word_wc.begin(),
