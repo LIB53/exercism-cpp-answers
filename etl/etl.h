@@ -1,10 +1,9 @@
-#if !defined(ETL_H)
-#define ETL_H
+#pragma once
 
+#include <algorithm>
+#include <cctype>
 #include <map>
 #include <vector>
-#include <cctype>
-#include <algorithm>
 
 
 namespace etl
@@ -14,5 +13,3 @@ namespace etl
 
 	new_map_type transform(const legacy_map_type& old);
 }
-
-#endif

@@ -1,4 +1,5 @@
 #include "anagram.h"
+
 using namespace std;
 
 
@@ -8,22 +9,22 @@ namespace anagram
 
 	anagram_comparison_data::anagram_comparison_data(const std::string& word)
 	{
-		auto base_word_buffer = string(word);
+		auto base_word_wc = string(word);
 		transform(
-			base_word_buffer.begin(),
-			base_word_buffer.end(),
-			base_word_buffer.begin(),
+			base_word_wc.begin(),
+			base_word_wc.end(),
+			base_word_wc.begin(),
 			::tolower
 		);
 
-		auto comparison_key_buffer = string(base_word_buffer);
+		auto comparison_key_wc = string(base_word_wc);
 		sort(
-			comparison_key_buffer.begin(),
-			comparison_key_buffer.end()
+			comparison_key_wc.begin(),
+			comparison_key_wc.end()
 		);
 
-		this->_base_word = base_word_buffer;
-		this->_comparison_key = comparison_key_buffer;
+		this->_base_word = base_word_wc;
+		this->_comparison_key = comparison_key_wc;
 	}
 
 	bool anagram_comparison_data::compare_with(anagram_comparison_data other)

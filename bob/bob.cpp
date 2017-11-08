@@ -9,7 +9,7 @@ namespace bob
 	{
 		const string message_trimmed = trim_copy(message);
 
-		// Guard - empty strings / Check if message is empty
+		// Guard empty strings / Check if message is empty
 
 		if (message_trimmed.empty())
 			return REPLY_FINE;
@@ -18,7 +18,7 @@ namespace bob
 
 		const string message_alpha_only = scan_alpha_only(message_trimmed);
 
-		if (message_alpha_only.length() > 0 /* XXX: short-circuit guards */
+		if (message_alpha_only.length() > 0 /* short-circuit guards */
 			&& equals(message_alpha_only, to_upper_copy(message_alpha_only)))
 			return REPLY_CHILL_OUT;
 
@@ -32,18 +32,17 @@ namespace bob
 
 	string scan_alpha_only(const string& strArg)
 	{
-		// Scan
-		
-		stringstream scanBuffer;
+		ostringstream scan_buffer;
+
 		for (auto itr = strArg.cbegin(); itr != strArg.cend(); ++itr)
 		{
-			char current = *itr;
+			const char& current = *itr;
 			
 			if (current >= 'a' && current <= 'z'
 				|| current >= 'A' && current <= 'Z')
-				scanBuffer << current;
+				scan_buffer << current;
 		}
 
-		return scanBuffer.str();
+		return scan_buffer.str();
 	}
 }

@@ -1,9 +1,8 @@
-# if !defined(ANAGRAM_H)
-#define ANAGRAM_H
+#pragma once
 
-#include <vector>
-#include <string>
 #include <algorithm>
+#include <string>
+#include <vector>
 
 
 namespace anagram
@@ -12,8 +11,8 @@ namespace anagram
 	{
 	public:
 		anagram_comparison_data(const std::string& word = "");
-		const std::string& base_word() const noexcept { return _base_word; }
-		const std::string& comparison_key() const noexcept { return _comparison_key; }
+		const std::string& base_word() const { return _base_word; }
+		const std::string& comparison_key() const { return _comparison_key; }
 		bool compare_with(const anagram_comparison_data other);
 
 	private:
@@ -32,5 +31,3 @@ namespace anagram
 		anagram::anagram_comparison_data comparison_data;
 	};
 }
-
-#endif

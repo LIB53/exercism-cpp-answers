@@ -12,6 +12,7 @@ namespace etl
 		const auto new_map_put_letter =
 			[]
 			(new_map_type& new_map, const char letter, const int point_value)
+				-> void
 			{
 				new_map[letter] = point_value;
 			};
