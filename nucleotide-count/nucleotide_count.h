@@ -1,11 +1,11 @@
 #pragma once
 
 #include <map>
-#include <string>
 #include <stdexcept>
+#include <string>
 
 
-#define INVALID_NUCLEOTIDE_EXCEPT invalid_argument("Invalid nucleotide symbol")
+#define INVALID_NUCLEOTIDE_EXCEPT std::invalid_argument("Invalid nucleotide symbol")
 
 namespace dna
 {
@@ -16,7 +16,7 @@ namespace dna
 	public:
 		counter(const std::string& sequence);
 		nucleotide_count_map nucleotide_counts() const;
-		int count(char nucleotide_symbol) const;
+		int count(const char nucleotide_symbol) const;
 	
 	private:
 		int A_counter = 0;

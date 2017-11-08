@@ -40,7 +40,7 @@ namespace dna
 		};
 	}
 
-	int counter::count(char nucleotide_symbol) const
+	int counter::count(const char nucleotide_symbol) const
 	{
 		switch (nucleotide_symbol)
 		{
