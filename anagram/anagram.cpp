@@ -7,9 +7,9 @@ namespace anagram
 {
 #pragma region Anagram Comparison Data Class
 
-	anagram_comparison_data::anagram_comparison_data(const std::string& word)
+	anagram_comparison_data::anagram_comparison_data(const string word)
 	{
-		auto base_word_wc = string(word);
+		auto base_word_wc = word;
 		transform(
 			base_word_wc.begin(),
 			base_word_wc.end(),
@@ -17,7 +17,7 @@ namespace anagram
 			::tolower
 		);
 
-		auto comparison_key_wc = string(base_word_wc);
+		auto comparison_key_wc = base_word_wc;
 		sort(
 			comparison_key_wc.begin(),
 			comparison_key_wc.end()
@@ -27,7 +27,7 @@ namespace anagram
 		this->_comparison_key = comparison_key_wc;
 	}
 
-	bool anagram_comparison_data::compare_with(anagram_comparison_data other)
+	bool anagram_comparison_data::compare_with(const anagram_comparison_data other)
 	{
 		return
 			this->base_word() != other.base_word()
@@ -39,13 +39,13 @@ namespace anagram
 
 #pragma region Anagram Class
 
-	bool anagram::is_match_with(const string& word)
+	bool anagram::is_match_with(const string word)
 	{
 		return
 			this->comparison_data.compare_with(anagram_comparison_data(word));
 	}
 
-	vector<string> anagram::matches(const vector<string>& words)
+	vector<string> anagram::matches(const vector<string> words)
 	{
 		vector<string> matches_buffer;
 
