@@ -5,7 +5,7 @@ using namespace boost;
 
 namespace bob
 {
-	string hey(const string& message)
+	string hey(const string message)
 	{
 		const string message_trimmed = trim_copy(message);
 
@@ -30,7 +30,7 @@ namespace bob
 		return REPLY_WHATEVER;
 	}
 
-	string scan_alpha_only(const string& strArg)
+	string scan_alpha_only(const string strArg)
 	{
 		ostringstream scan_buffer;
 
