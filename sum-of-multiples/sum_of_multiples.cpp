@@ -18,17 +18,23 @@ std::vector<int> sum_of_multiples::find_multiples(
 	const std::set<int> integers,
 	const int upper_limit)
 {
+	const auto is_valid_multiple =
+		[&integers](const int candidate)
+			-> bool
+		{
+			bool b = false;
+
+			for (const auto& i : integers)
+				b |= candidate % i == 0;
+
+			return b;
+		};
+
 	std::vector<int> multiples_buffer;
 	
 	for (int candidate = 1; candidate < upper_limit; candidate++)
 	{
-		bool is_valid_multiple = false;
-		{
-			for (const auto& i : integers)
-				is_valid_multiple |= candidate % i == 0;
-		}
-		
-		if (is_valid_multiple)
+		if (is_valid_multiple(candidate))
 			multiples_buffer.push_back(candidate);
 	}
 
