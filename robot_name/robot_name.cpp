@@ -29,15 +29,15 @@ namespace robot_name
 	std::string robot_name::name_provisioner::gen_name() const
 	{
 		static std::default_random_engine rand_e{ std::random_device{}() };
-		static std::uniform_int_distribution<int> random_letter_d{ 'A', 'Z' };
-		static std::uniform_int_distribution<int> random_digit_d{ '0', '9' };
+		static const std::uniform_int_distribution<int> rand_letter_d{ 'A', 'Z' };
+		static const std::uniform_int_distribution<int> rand_digit_d{ '0', '9' };
 
 		return {
-			char(random_letter_d(rand_e)),
-			char(random_letter_d(rand_e)),
-			char(random_digit_d(rand_e)),
-			char(random_digit_d(rand_e)),
-			char(random_digit_d(rand_e))
+			char(rand_letter_d(rand_e)),
+			char(rand_letter_d(rand_e)),
+			char(rand_digit_d(rand_e)),
+			char(rand_digit_d(rand_e)),
+			char(rand_digit_d(rand_e))
 		};
 	}
 
@@ -48,7 +48,7 @@ namespace robot_name
 
 	robot_name::robot::robot()
 	{
-		_name_provisioning_host = &default_names_bucket;
+		_name_provisioning_bucket = &default_names_bucket;
 
 		reset();
 	}

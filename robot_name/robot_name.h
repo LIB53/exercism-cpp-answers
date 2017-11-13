@@ -33,7 +33,7 @@ namespace robot_name
 		void reset();
 		std::string name() const;
 	private:
-		const name_provisioner* _name_provisioning_host;
+		const name_provisioner* _name_provisioning_bucket;
 		std::string _name;
 	};
 }
