@@ -8,8 +8,8 @@ namespace say
 	*/
 	
 	std::string format_section(
-		const uint_fast64_t quantity,
 		const std::string section_name,
+		const uint_fast64_t quantity,
 		const std::function<std::string(const say_number)> in_english_formatter
 	)
 	{
@@ -29,9 +29,7 @@ namespace say
 
 		for (size_t i = 0; i < sections.size(); i++)
 		{
-			const auto& current = sections.at(i);
-
-			word_buffer << current;
+			word_buffer << sections.at(i);;
 
 			// Maybe add delimiter
 
@@ -42,9 +40,8 @@ namespace say
 		return word_buffer.str();
 	}
 
-	std::string in_english_0_99(const say_number number)
+	std::string in_english_99(const say_number number)
 	{
-
 		const uint_fast8_t tens_place = (number % 100) / 10;
 		const uint_fast8_t ones_place = number % 10;
 
@@ -78,7 +75,6 @@ namespace say
 		case 9: prefix = "ninety"; break;
 		}
 
-
 		switch (ones_place)
 		{
 		case 0:
@@ -106,19 +102,19 @@ namespace say
 			;
 	}
 	
-	std::string in_english_0_999(const say_number number)
+	std::string in_english_999(const say_number number)
 	{
 		std::vector<std::string> sections_buffer;
 
 		// Build sections
 
-		// - Hundreds section
+		// - Hundred section
 		{
 			const uint_fast16_t num_hundreds = (number % 1000) / 100;
 
 			if (num_hundreds != 0)
 				sections_buffer.push_back(
-					format_section(num_hundreds, "hundred", in_english_0_99)
+					format_section("hundred", num_hundreds, in_english_99)
 				);
 		}
 
@@ -128,7 +124,7 @@ namespace say
 
 			if (!omit_0_99_section)
 				sections_buffer.push_back(
-					in_english_0_99(number)
+					in_english_99(number)
 				);
 		}
 		
@@ -151,13 +147,13 @@ namespace say
 		
 		std::vector<std::string> sections_buffer;
 
-		// - Billions section
+		// - Billion section
 		{
 			const uint_fast64_t num_billions = (number % ONE_TRILLION) / ONE_BILLION;
 
 			if (num_billions != 0)
 				sections_buffer.push_back(
-					format_section(num_billions, "billion", in_english_0_999)
+					format_section("billion", num_billions, in_english_999)
 				);
 		}
 		
@@ -167,7 +163,7 @@ namespace say
 
 			if (num_millions != 0)
 				sections_buffer.push_back(
-					format_section(num_millions, "million", in_english_0_999)
+					format_section("million", num_millions, in_english_999)
 				);
 		}
 		
@@ -177,13 +173,13 @@ namespace say
 
 			if (num_thousands != 0)
 				sections_buffer.push_back(
-					format_section(num_thousands, "thousand", in_english_0_999)
+					format_section("thousand", num_thousands, in_english_999)
 				);
 		}
 
 		// - 0-999 section
 		{
-			const auto hundreds_section = in_english_0_999(number);
+			const auto hundreds_section = in_english_999(number);
 
 			if (hundreds_section != std::string{}) // XXX: omit
 				sections_buffer.push_back(hundreds_section);
