@@ -141,7 +141,7 @@ namespace say
 	std::string in_english(const say_number number)
 	{
 		if (number < 0 || number >= ONE_TRILLION)
-			throw NUMBER_TOO_LARGE_EXCEPT;
+			throw NUMBER_OUT_OF_RANGE_EXCEPT;
 
 		// Build sections
 		

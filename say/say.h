@@ -12,7 +12,7 @@
 #define ONE_BILLION (1000ULL * ONE_MILLION)
 #define ONE_TRILLION (1000ULL * ONE_BILLION)
 
-#define NUMBER_TOO_LARGE_EXCEPT std::domain_error("Number is too large.")
+#define NUMBER_OUT_OF_RANGE_EXCEPT std::domain_error("Number is out of range (1 - 999,999,999,999).")
 
 namespace say
 {
