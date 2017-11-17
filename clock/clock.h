@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <sstream>
 
 
 namespace date_independent
@@ -9,12 +8,12 @@ namespace date_independent
 	class clock
 	{
 	private:
-		int _hours;
-		int _minutes;
+		int _base_minutes;
 	public:
-		clock(const int num_hours, const int num_minutes);
-		int hours() const { return _hours; }
-		int minutes() const { return _minutes; }
+		clock(const int num_minutes);
+		int base_minutes() const { return _base_minutes; }
+		int hours() const;
+		int minutes() const;
 		clock plus(const int num_minutes) const;
 		operator std::string() const;
 		bool operator==(clock other) const;

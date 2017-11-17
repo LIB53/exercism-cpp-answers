@@ -1,88 +1,55 @@
 #include "clock.h"
 
+#include <iomanip>
+#include <sstream>
+
+
+#define DAY_TO_MIN (24 * 60)
 
 namespace date_independent
 {
-	/*
-		Internal
-	*/
-	
-	int hours_at(const int num_hours, const int num_minutes)
+	clock::clock(const int num_minutes)
 	{
-		const int minutes_rollover =
-			(num_minutes >= 60) ?
-				num_minutes / 60 // positive rollover
-				:
-				(num_minutes < 0) ?
-					(num_minutes / 60) - 1 // negative rollover
-					:
-					0;
-		
-		const int hours_rollover = num_hours % 24;
-		
-		const int overflow = (minutes_rollover + hours_rollover) % 24;
+		const int overflow = num_minutes % DAY_TO_MIN;
 
-		return (24 + overflow) % 24;
-	}
-
-	int minutes_at(const int num_minutes)
-	{
-		const int overflow = num_minutes % 60;
-
-		return (60 + overflow) % 60;
+		_base_minutes = (DAY_TO_MIN + overflow) % DAY_TO_MIN;
 	}
 	
-
-	/*
-		Exported
-	*/
-	
-	clock::clock(const int num_hours, const int num_minutes)
+	int clock::hours() const
 	{
-		_hours = hours_at(num_hours, num_minutes);
-		_minutes = minutes_at(num_minutes);
+		return _base_minutes / 60;
 	}
-
+	
+	int clock::minutes() const
+	{
+		return _base_minutes % 60;
+	}
+	
 	clock clock::plus(const int num_minutes) const
 	{
-		return clock(hours(), minutes() + num_minutes);
+		return clock(_base_minutes + num_minutes);
 	}
 	
 	clock::operator std::string() const
 	{
-		const auto format_numerals =
-			[]
-			(const int numerals)
-			-> std::string
-			{
-				std::ostringstream formatter;
-
-				formatter
-					<< (numerals < 10 ? "0" : "")
-					<< numerals;
-
-				return formatter.str();
-			};
-
 		std::ostringstream to_string_builder;
 
 		to_string_builder
-			<< format_numerals(hours())
+			<< std::setfill('0')
+			<< std::setw(2) << hours()
 			<< ":"
-			<< format_numerals(minutes());
+			<< std::setw(2) << minutes();
 
 		return to_string_builder.str();
 	}
 
 	bool clock::operator==(clock other) const
 	{
-		return
-			this->hours() == other.hours()
-			&& this->minutes() == other.minutes();
+		return this->base_minutes() == other.base_minutes();
 	}
-
+	
 	clock clock::at(const int num_hours, const int num_minutes)
 	{
-		return clock{ num_hours, num_minutes };
+		return clock{ num_hours * 60 + num_minutes };
 	}
 }
