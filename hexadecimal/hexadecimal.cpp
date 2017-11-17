@@ -19,6 +19,10 @@ int hexadecimal::convert(const std::string sequence)
 		{
 			c_converted = 10 + (c - 'a');
 		}
+		else if (c >= 'A' && c <= 'F')
+		{
+			c_converted = 10 + (c - 'A');
+		}
 		else // XXX: invalid format
 			return 0;
 
