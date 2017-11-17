@@ -3,13 +3,13 @@
 
 int hexadecimal::convert(const std::string sequence)
 {
-	int hex_value_buffer = 0;
+	unsigned int hex_value_buffer = 0;
 	
 	for (char c : sequence)
 	{
 		// Attempt to convert character
 		
-		int c_converted;
+		uint_fast8_t c_converted;
 		
 		if (c >= '0' && c <= '9')
 		{
@@ -24,7 +24,7 @@ int hexadecimal::convert(const std::string sequence)
 
 		// Append hex digit
 		
-		hex_value_buffer = (hex_value_buffer * 16) + c_converted;
+		hex_value_buffer = (hex_value_buffer << 4) | c_converted;
 	}
 
 	return hex_value_buffer;
