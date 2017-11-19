@@ -8,5 +8,8 @@
 
 namespace prime
 {
-	int nth(const int nth);
+	typedef unsigned long prime_number_t;
+	typedef unsigned int nth_prime_t;
+	
+	prime_number_t nth(const nth_prime_t nth);
 }

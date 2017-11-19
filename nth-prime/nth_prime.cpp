@@ -7,32 +7,35 @@
 
 namespace prime
 {
-	unsigned int gen_prime(const int nth, const int upper_bound)
+	unsigned long gen_prime(const nth_prime_t nth, const prime_number_t upper_bound)
 	{
 		// Implements Sieve of Eratosthenes
 		
-		unsigned int th_prime_number = 0, prime_number;
+		nth_prime_t th_prime_number = 0;
+		prime_number_t prime_number;
 		std::vector<bool> composites_work_table(upper_bound - 1, false);
 
 		const auto raise_found_prime_number =
-			[&th_prime_number, &prime_number](const unsigned int number)
+			[&th_prime_number, &prime_number](const prime_number_t number)
 		{
 			th_prime_number++;
 			prime_number = number;
 		};
 		
-		const auto mark_composite = [&composites_work_table](const int number)
+		const auto mark_composite =
+			[&composites_work_table](const prime_number_t number)
 		{
 			composites_work_table[number - 2] = true;
 		};
 
-		const auto is_marked_composite = [&composites_work_table](const int number)
+		const auto is_marked_composite =
+			[&composites_work_table](const prime_number_t number)
 			-> bool
 		{
 			return composites_work_table.at(number - 2);
 		};
 
-		for (int i = 2; i <= upper_bound; i++)
+		for (prime_number_t i = 2; i <= upper_bound; i++)
 		{
 			if (!is_marked_composite(i))
 			{
@@ -41,7 +44,7 @@ namespace prime
 				if (th_prime_number == nth)
 					return prime_number;
 
-				for (int r = i + 1; r <= upper_bound; r++)
+				for (auto r = i + 1; r <= upper_bound; r++)
 					if (r % i == 0)
 						mark_composite(r);
 			}
@@ -50,7 +53,7 @@ namespace prime
 		throw GEN_PRIME_NO_RESULT;
 	}
 
-	unsigned int nth_sieve(const unsigned int nth)
+	prime_number_t nth_sieve(const nth_prime_t nth)
 	{
 		if (nth == 0)
 			throw INVALID_NTH_PRIME_ARG(nth);
@@ -59,16 +62,16 @@ namespace prime
 		// is less than or equal to the output of the real prime counting
 		// function for the same argument.
 		
-		const auto prime_count_approx = [](const unsigned int x)
-			-> unsigned int
+		const auto prime_count_approx = [](const prime_number_t x)
+			-> nth_prime_t
 		{
-			return (unsigned int)(floor(x / log(x)));
+			return (nth_prime_t)(floor(x / log(x)));
 		};
 
 		// Linear search the output set of prime counting function to find
 		// upper bound in sieve for generating primes.
 		
-		unsigned int upper_bound = 2;
+		prime_number_t upper_bound = 2UL;
 		for (; prime_count_approx(upper_bound) <= nth; upper_bound++);
 
 		// Use variant of sieve that will return the nth prime number.
@@ -76,49 +79,11 @@ namespace prime
 		return gen_prime(nth, upper_bound);
 	}
 
-	//bool is_prime(const unsigned int number)
-	//{
-	//	for (
-	//		unsigned int divisor_itr = 2;
-	//		divisor_itr <= unsigned int(ceil(sqrt(number)));
-	//		divisor_itr++
-	//		)
-	//	{
-	//		if (number % divisor_itr == 0)
-	//			return false;
-	//	}
-
-	//	return true;
-	//}
-
-	//unsigned int nth_simple(const unsigned int nth)
-	//{
-	//	if (nth == 0)
-	//		throw INVALID_NTH_PRIME_ARG(nth);
-	//	
-	//	unsigned int prime_counter = 1, prime_buffer = 2;
-
-	//	for (
-	//		unsigned int candidate = 3;
-	//		prime_counter < nth;
-	//		candidate++
-	//		)
-	//	{
-	//		if (is_prime(candidate))
-	//		{
-	//			prime_counter++;
-	//			prime_buffer = candidate;
-	//		}
-	//	}
-
-	//	return prime_buffer;
-	//}
-
 	/*
 		Exported
 	*/
 	
-	int nth(const int nth)
+	prime_number_t nth(const nth_prime_t nth)
 	{
 		if (nth <= 0)
 			throw INVALID_NTH_PRIME_ARG(nth);
