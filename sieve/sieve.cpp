@@ -7,28 +7,28 @@ namespace sieve
 	{
 		std::vector<int> primes_buffer;
 		
-		std::set<int> blacklist;
+		std::vector<bool> composites_work_table(max - 1, false);
 
-		const auto insert_blacklist_item = [&blacklist](const int item)
+		const auto mark_composite = [&composites_work_table](const int number)
 		{
-			blacklist.insert(item);
+			composites_work_table[number - 2] = true;
 		};
 
-		const auto blacklist_contains_item = [&blacklist](const int item)
+		const auto is_marked_composite = [&composites_work_table](const int number)
 			-> bool
 		{
-			return blacklist.find(item) != blacklist.cend();
+			return composites_work_table.at(number - 2);
 		};
 
 		for (int i = 2; i <= max; i++)
 		{
-			if (!blacklist_contains_item(i))
+			if (!is_marked_composite(i))
 			{
 				primes_buffer.push_back(i);
 
 				for (int r = i + 1; r <= max; r++)
 					if (r % i == 0)
-						insert_blacklist_item(r);
+						mark_composite(r);
 			}
 		}
 
