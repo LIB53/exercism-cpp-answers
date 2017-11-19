@@ -1,18 +1,21 @@
 #include "nth_prime.h"
 
-#include <limits>
 #include <math.h>
 #include <vector>
 
 
 namespace prime
 {
-	unsigned long gen_prime(const nth_prime_t nth, const prime_number_t upper_bound)
+	prime_number_t gen_prime(
+		const nth_prime_t nth,
+		const prime_number_t upper_bound
+	)
 	{
 		// Implements Sieve of Eratosthenes
 		
 		nth_prime_t th_prime_number = 0;
 		prime_number_t prime_number;
+		
 		std::vector<bool> composites_work_table(upper_bound - 1, false);
 
 		const auto raise_found_prime_number =
@@ -71,7 +74,7 @@ namespace prime
 		// Linear search the output set of prime counting function to find
 		// upper bound in sieve for generating primes.
 		
-		prime_number_t upper_bound = 2UL;
+		prime_number_t upper_bound = 2;
 		for (; prime_count_approx(upper_bound) <= nth; upper_bound++);
 
 		// Use variant of sieve that will return the nth prime number.
