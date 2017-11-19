@@ -86,7 +86,7 @@ namespace prime
 		Exported
 	*/
 	
-	prime_number_t nth(const nth_prime_t nth)
+	prime_number_t nth(const int nth)
 	{
 		if (nth <= 0)
 			throw INVALID_NTH_PRIME_ARG(nth);
