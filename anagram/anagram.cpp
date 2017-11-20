@@ -1,33 +1,33 @@
 #include "anagram.h"
 
-using namespace std;
+#include <algorithm>
 
 
 namespace anagram
 {
 #pragma region Anagram Comparison Data Class
 
-	anagram_comparison_data::anagram_comparison_data(const string word)
+	anagram_comparison_data::anagram_comparison_data(const std::string word)
 	{
-		auto base_word_wc = word;
+		auto base_word_lower = word;
 		transform(
-			base_word_wc.begin(),
-			base_word_wc.end(),
-			base_word_wc.begin(),
+			base_word_lower.begin(),
+			base_word_lower.end(),
+			base_word_lower.begin(),
 			::tolower
 		);
 
-		auto comparison_key_wc = base_word_wc;
+		auto comparison_key_wc = base_word_lower;
 		sort(
 			comparison_key_wc.begin(),
 			comparison_key_wc.end()
 		);
 
-		this->_base_word = base_word_wc;
+		this->_base_word = base_word_lower;
 		this->_comparison_key = comparison_key_wc;
 	}
 
-	bool anagram_comparison_data::compare_with(const anagram_comparison_data other)
+	bool anagram_comparison_data::operator==(const anagram_comparison_data other) const
 	{
 		return
 			this->base_word() != other.base_word()
@@ -39,19 +39,13 @@ namespace anagram
 
 #pragma region Anagram Class
 
-	bool anagram::is_match_with(const string word)
+	std::vector<std::string> anagram::matches(const std::vector<std::string> words) const
 	{
-		return
-			this->comparison_data.compare_with(anagram_comparison_data(word));
-	}
+		std::vector<std::string> matches_buffer;
 
-	vector<string> anagram::matches(const vector<string> words)
-	{
-		vector<string> matches_buffer;
-
-		for (auto w : words)
+		for (const auto w : words)
 		{
-			if (this->is_match_with(w))
+			if (_comparison_data == anagram_comparison_data(w))
 				matches_buffer.push_back(w);
 		}
 
