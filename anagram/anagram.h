@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -11,8 +10,8 @@ namespace anagram
 	{
 	public:
 		anagram_comparison_data(const std::string word);
-		const std::string base_word() const { return _base_word; }
-		const std::string comparison_key() const { return _comparison_key; }
+		std::string base_word() const { return _base_word; }
+		std::string comparison_key() const { return _comparison_key; }
 		bool operator==(const anagram_comparison_data other) const;
 
 	private:
