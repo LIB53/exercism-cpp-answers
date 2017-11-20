@@ -7,9 +7,9 @@ namespace series
 	{
 		std::vector<int> digits_buffer;
 
-		for (char c : number_sequence)
+		for (const char c : number_sequence)
 		{
-			if (c >= '0' && c <= '9')
+			if (isdigit(c))
 				digits_buffer.push_back(c - '0');
 		}
 
@@ -28,8 +28,8 @@ namespace series
 			[]
 			(
 				const std::string& s,
-				const size_t& pos_arg,
-				const size_t& length_arg
+				const size_t pos_arg,
+				const size_t length_arg
 			)
 			-> bool
 			{
@@ -40,7 +40,7 @@ namespace series
 
 		for (
 			size_t i_pos = 0;
-			guard_substr(number_sequence, i_pos, length); // XXX: truncates remainder
+			guard_substr(number_sequence, i_pos, length); // XXX: OK, truncates remainder
 			++i_pos
 		)
 		{
