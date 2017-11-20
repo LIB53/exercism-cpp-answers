@@ -1,5 +1,7 @@
 #include "robot_name.h"
 
+#include <random>
+
 
 namespace robot_name
 {
@@ -16,11 +18,14 @@ namespace robot_name
 		do
 		{
 			// Get new possible name
+			
 			candidate = gen_name();
 			
 			// Check if name is available
-			auto elect_result = provisioned_names.insert(candidate);
+			
+			const auto elect_result = provisioned_names.insert(candidate);
 			was_elected = elect_result.second;
+		
 		} while (!was_elected);
 
 		return candidate;
@@ -32,7 +37,8 @@ namespace robot_name
 		static const std::uniform_int_distribution<int> rand_letter_d{ 'A', 'Z' };
 		static const std::uniform_int_distribution<int> rand_digit_d{ '0', '9' };
 
-		return {
+		return
+		{
 			char(rand_letter_d(rand_e)),
 			char(rand_letter_d(rand_e)),
 			char(rand_digit_d(rand_e)),
