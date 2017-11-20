@@ -1,13 +1,11 @@
 #include "nucleotide_count.h"
 
-using namespace std;
-
 
 namespace dna
 {
-	counter::counter(const string& sequence)
+	counter::counter(const std::string sequence)
 	{
-		for (char c : sequence)
+		for (const char c : sequence)
 		{
 			switch (c)
 			{
@@ -36,7 +34,7 @@ namespace dna
 			{ 'A', A_counter },
 			{ 'T', T_counter },
 			{ 'C', C_counter },
-			{ 'G', G_counter },
+			{ 'G', G_counter }
 		};
 	}
 
@@ -55,7 +53,5 @@ namespace dna
 		default:
 			throw INVALID_NUCLEOTIDE_EXCEPT;
 		}
-
-		return 0;
 	}
 }
