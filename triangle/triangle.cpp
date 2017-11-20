@@ -1,8 +1,13 @@
 #include "triangle.h"
 
+
 namespace triangle
 {
-	int kind(const double a_length, const double b_length, const double c_length)
+	triangle_kind kind(
+		const double a_length,
+		const double b_length,
+		const double c_length
+	)
 	{
 		if (!is_valid(a_length, b_length, c_length))
 			throw INVALID_TRIANGLE_LENGTHS_EXCEPT;
@@ -11,14 +16,21 @@ namespace triangle
 		
 		if (a_length == b_length && b_length == c_length)
 			return equilateral;
-
-		if (a_length == b_length || b_length == c_length || c_length == a_length)
+		else if (
+			a_length == b_length
+			|| b_length == c_length
+			|| c_length == a_length
+			)
 			return isosceles;
-
-		return scalene;
+		else
+			return scalene;
 	}
 
-	bool is_valid(double a_length, double b_length, double c_length)
+	bool is_valid(
+		const double a_length,
+		const double b_length,
+		const double c_length
+	)
 	{
 		// TODO: Use double approximate comparator
 
@@ -29,16 +41,20 @@ namespace triangle
 
 		// Triangle Inequality Test
 
-		if (a_length + b_length < c_length
+		if (
+			a_length + b_length < c_length
 			|| b_length + c_length < a_length
-			|| c_length + a_length < b_length)
+			|| c_length + a_length < b_length
+		)
 			return false;
 
 		// Degenerate Triangle Test
 
-		if (a_length + b_length == c_length
+		if (
+			a_length + b_length == c_length
 			|| b_length + c_length == a_length
-			|| c_length + a_length == b_length)
+			|| c_length + a_length == b_length
+		)
 			return false;
 
 		return true;
